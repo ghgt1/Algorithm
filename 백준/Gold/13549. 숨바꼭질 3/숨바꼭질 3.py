@@ -17,15 +17,15 @@ while(True):
       if graph[2*a] == 0 or count[2*a]>count[a]:
         graph[2*a] = 1
         count[2*a] = count[a]
-        l1.append(2*a)
-    if a>0:
-      if graph[a-1] == 0:
-        graph[a-1] = 1
-        count[a-1] = count[a] +1
-        l1.append(a-1)
+        l1.appendleft(2*a)
     if a<100000:
       if graph[a+1] == 0:
         graph[a+1] = 1
         count[a+1] = count[a] +1
         l1.append(a+1)
+    if a>0:
+      if graph[a-1] == 0:
+        graph[a-1] = 1
+        count[a-1] = count[a] +1
+        l1.append(a-1)
 print(count[k])
