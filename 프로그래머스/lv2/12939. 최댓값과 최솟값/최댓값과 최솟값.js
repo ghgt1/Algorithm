@@ -1,9 +1,7 @@
 function solution(s) {
     var answer = '';
     var l1 = s.split(' ')
-    for(let i = 0;i<l1.length;i++){
-        l1[i] = Number(l1[i])
-    }
+    // l1.forEach(i => Number(i))
     function comp(a,b){
         return a-b
     }
