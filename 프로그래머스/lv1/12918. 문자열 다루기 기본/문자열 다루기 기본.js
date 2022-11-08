@@ -4,7 +4,7 @@ function solution(s) {
         return false
     else{
         for(let x of s){
-            if(isNaN(Number(x)))
+            if(isNaN((x)))
                 return false
         }
         return true
