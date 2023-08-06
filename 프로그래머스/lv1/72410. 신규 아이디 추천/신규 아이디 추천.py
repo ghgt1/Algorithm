@@ -27,7 +27,7 @@ def solution(new_id):
         l1.append(k)
         
     #4
-    if l1[0] == '.':
+    if len(l1) >0 and l1[0] == '.':
         del l1[0]
     if len(l1) >0 and l1[-1] == '.':
         del l1[-1]
