@@ -1,31 +1,36 @@
-import bisect
+import sys
+sys.setrecursionlimit(10**6)
 
 def solution(n, times):
-    answer = 0
-    # 그리고 27이안되고 28이됨. 왜? 28/7 = 4 나누기 연산을 통해 최적이 계산되버림
-    # 파라메트릭으로 접근
-    left = 0
-    right = max(times) * n
-    target = 0
+    global answer
+    #소모시간+남은시간을 합쳐서 비교해야함
+    #중요한건 심사관
+    #멍청한놈. 그냥 최소시간이 필요하니. 시간을 매개변수로 찾자
+    answer = float('inf')
+    time = n * max(times)
     
-    def cal(time):
-        count = 0
+    def check_ok(candidate):
+        tmp = 0
         for k in times:
-            count += time//k
-        if count>=n:
+            tmp += candidate//k
+        if tmp>=n:
             return True
         else:
             return False
-        
-    while left<=right:
-        print(target,left,right)
-        if left > right:
-            break
-        target = (left+right)//2
-        if cal(target):
-            right = target-1
-            answer = target
+    
+    def parametric_search(start,end):
+        global answer
+        #이시간이 들어왔을때 되는지 판단
+        mid = (start+end)//2
+        if start>=end:
+            return
+        if check_ok(mid):
+            end = mid 
+            parametric_search(start,end)
+            answer = min(answer,mid)
         else:
-            left = target+1
-        
+            start = mid+1
+            parametric_search(start,end)
+            
+    parametric_search(0,time)
     return answer
