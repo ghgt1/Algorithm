@@ -2,40 +2,34 @@ from collections import deque
 
 def solution(begin, target, words):
     answer = 0
-#     한번 방문하면 무조건 visited False
-#     쭉 나가면서 하나바꿀때 되는것들 전부 queue에 넣기
-
-    def cal(tmp):
-        candidates = []
-        for k in words:
-            tmp_count = 0
-            for u in range(len(k)):
-                if tmp[u] != k[u]:
-                    tmp_count+=1
-            if tmp_count == 1:
-                if visited[k]:
-                    candidates.append(k)
-        return candidates
-    
-    def bfs():
-        queue = deque([(begin,0)])
-        while queue:
-            word,count = queue.pop()
-            visited[word] = False
-            if word == target:
-                return count
-            candidates = cal(word)
-            for k in candidates:
-                queue.append((k,count+1))
-        return 0
-        
-            
-            
-            
+    #visited를 갖고있어야한다. 즉 한번 거쳐온 단어는 다시 못감
+    #비교함수를 통해 한가지 글자만 다른지확인해야한다
     visited = {}
+    visited[begin] = False
     for k in words:
-        visited[k] = True
+        visited[k] = False
     
-    answer = bfs()
+    def comp(a,b):
+        count = 0
+        for k in range(len(a)):
+            if a[k] != b[k]:
+                count+=1
+        if count == 1:
+            return True
+        else:
+            return False
     
+    def bfs(v,visited):
+        queue = deque([(v,0)])
+        while queue:
+            node, count = queue.popleft()
+            visited[node] = True
+            if node == target:
+                return count
+            for k in words:
+                if comp(k,node) and not visited[k]:
+                    queue.append((k,count+1))
+    answer = bfs(begin,visited)
+    if answer == None:
+        return 0
     return answer
